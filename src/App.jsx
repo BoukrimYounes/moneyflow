@@ -13,7 +13,7 @@ function App() {
     amount: "",
     category: "",
     date: "",
-    type: "income",
+    type: "expense",
   });
 
   const [editingId, setIsEditingId] = useState(null);

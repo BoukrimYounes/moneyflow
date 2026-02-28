@@ -48,15 +48,15 @@ function SummaryCard({ balance, totalIncome, totalExpenses }) {
             >
               New Balance
             </p>
-            <p className="text-4xl font-bold text-red-400 mt-2">
+            <p className="text-4xl font-bold text-blue-400 mt-2">
               ${Math.abs(balance).toFixed(2)}
             </p>
           </div>
           <div
-            className={`${balance >= 0 ? "bg-blue-500/20" : "bg-orange-500/20"} p-4 rounded-2xl`}
+            className={`bg-blue-500/20  p-4 rounded-2xl`}
           >
             <DollarSign
-              className={`${balance >= 0 ? "text-blue" : "text-orange-400"}`}
+              className={`text-blue`}
             />
           </div>
         </div>

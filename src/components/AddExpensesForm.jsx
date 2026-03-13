@@ -1,5 +1,6 @@
 import { AlertCircle, Plus, TrendingDown, TrendingUp } from "lucide-react";
 import { useState } from "react";
+import { categories } from "/src/util/categories.js";
 
 function AddExpensesForm({
   formData,
@@ -51,7 +52,7 @@ function AddExpensesForm({
     } else {
       setExpenses([...expenses, expenseData]);
       showToast(
-        `${formData.type === "income" ? "income" : "Expense"} added successfully`,
+        `${formData.type === "income" ? "Income" : "Expense"} added successfully`,
         "success",
       );
       setFormData({
@@ -59,11 +60,12 @@ function AddExpensesForm({
         amount: "",
         category: "",
         date: "",
-        type: "expense",
+        type: "income",
       });
       setErrors({});
     }
   };
+
   const cancelEdit = () => {
     setIsEditingId(null);
     setFormData({
@@ -71,11 +73,13 @@ function AddExpensesForm({
       amount: "",
       category: "",
       date: "",
-      type: "expense",
+      type: "income",
     });
     setErrors({});
     showToast("Edit cancelled", "info");
   };
+
+
 
   return (
     <div className="bg-white/5 backdrop-blur-lg rounded-3xl p-8 border border-white shadow-2xl">
@@ -97,27 +101,6 @@ function AddExpensesForm({
           </label>
           <div className="flex space-x-4">
             <label
-              className={`flex-1 flex items-center justify-center p-4 rounded-2xl border-2 cursor-pointer transition-all border-gray-400/20 bg-gray-800/20 text-gray-100/50 ${formData.type === "expense" && "border-red-500 bg-red-500/30 text-white"}`}
-            >
-              <input
-                type="radio"
-                name="type"
-                className="sr-only"
-                value="expense"
-                checked={formData.type === "expense"}
-                onChange={(e) => {
-                  setFormData({
-                    ...formData,
-                    type: e.target.value,
-                    category: "",
-                  });
-                  setErrors({});
-                }}
-              />
-              <TrendingDown className="w-5 h-5 mr-2" />
-              <span className="font-medium">Expense</span>
-            </label>
-            <label
               className={`flex-1 flex items-center justify-center p-4 rounded-2xl border-2 cursor-pointer transition-all  border-gray-400/20 bg-gray-800/20 text-gray-100/50 ${formData.type === "income" && "border-green-500 bg-green-500/30 text-white"}`}
             >
               <input
@@ -130,13 +113,34 @@ function AddExpensesForm({
                   setFormData({
                     ...formData,
                     type: e.target.value,
-                    category: "",
+                    // category: "",
                   });
                   setErrors({});
                 }}
               />
               <TrendingUp className="w-5 h-5 mr-2" />
               <span className="font-medium">Income</span>
+            </label>
+            <label
+              className={`flex-1 flex items-center justify-center p-4 rounded-2xl border-2 cursor-pointer transition-all border-gray-400/20 bg-gray-800/20 text-gray-100/50 ${formData.type === "expense" && "border-red-500 bg-red-500/30 text-white"}`}
+            >
+              <input
+                type="radio"
+                name="type"
+                className="sr-only"
+                value="expense"
+                checked={formData.type === "expense"}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    type: e.target.value,
+                    // category: "",
+                  });
+                  setErrors({});
+                }}
+              />
+              <TrendingDown className="w-5 h-5 mr-2" />
+              <span className="font-medium">Expense</span>
             </label>
           </div>
         </div>
@@ -151,7 +155,7 @@ function AddExpensesForm({
             onChange={(e) => {
               setFormData({
                 ...formData,
-                type: e.target.value,
+                description: e.target.value,
               });
               if (errors.description) {
                 setErrors({ ...errors, description: "" });
@@ -180,10 +184,10 @@ function AddExpensesForm({
               value={formData.amount}
               name="amount"
               step="0.01"
-              nChange={(e) => {
+              onChange={(e) => {
                 setFormData({
                   ...formData,
-                  type: e.target.value,
+                  amount: e.target.value,
                 });
                 if (errors.amount) {
                   setErrors({ ...errors, amount: "" });
@@ -207,10 +211,10 @@ function AddExpensesForm({
           <select
             value={formData.category}
             name="category"
-            nChange={(e) => {
+            onChange={(e) => {
               setFormData({
                 ...formData,
-                type: e.target.value,
+                category: e.target.value,
               });
               if (errors.category) {
                 setErrors({ ...errors, category: "" });
@@ -219,6 +223,11 @@ function AddExpensesForm({
             className={`w-full px-6 py-4 appearance-none border-2 rounded-2xl  border-gray-400/20 bg-gray-800/20   transition-all text-gray-100/50 ${errors.category && "border-red-500"}`}
           >
             <option value="">Choose Category</option>
+            {categories[formData.type].map((category) => (
+              <option key={category} value={category} className="bg-gray-700">
+                {category}
+              </option>
+            ))}
           </select>
           {errors.category && (
             <p className="text-red-400 text-sm mt-2 flex items-center">
@@ -235,10 +244,10 @@ function AddExpensesForm({
             type="date"
             value={formData.date}
             name="date"
-            nChange={(e) => {
+            onChange={(e) => {
               setFormData({
                 ...formData,
-                type: e.target.value,
+                date: e.target.value,
               });
               if (errors.date) {
                 setErrors({ ...errors, date: "" });

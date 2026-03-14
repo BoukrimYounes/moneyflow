@@ -66,7 +66,7 @@ function App() {
   });
 
   const handleEdit = (expense) => {
-    setExpenses({
+    setFormData({
       description: expense.description,
       amount: expense.amount.toString(),
       category: expense.category,

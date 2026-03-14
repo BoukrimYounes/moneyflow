@@ -266,7 +266,7 @@ function AddExpensesForm({
           <button
             type="button"
             onClick={handleSubmit}
-            className="flex-1 bg-linear-to-r from-purple-600 to-pink-600 text-white py-4 px-6 rounded-2xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+            className="flex-1 bg-linear-to-r from-purple-600 to-pink-600 text-white py-4 px-6 rounded-2xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 mr-2.5"
           >
             {editingId ? "Update" : "Add Entry"}
           </button>
